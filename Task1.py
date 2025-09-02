@@ -1,7 +1,3 @@
-
-
-
-
 from itertools import combinations
 
 # Pokédex: each Pokémon mapped to its types
