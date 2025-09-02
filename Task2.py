@@ -15,6 +15,6 @@ if __name__ == "__main__":
     result = earliest_step_to_form_lumos(sequence)
 
     if result != -1:
-        print(f" Hermione can form 'LUMOS' by step {result}.")
+        print(" Hermione can form 'LUMOS' by step {result}.")
     else:
         print(" She cannot form 'LUMOS' from the given runes.")
