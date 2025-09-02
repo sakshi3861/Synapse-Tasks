@@ -4,7 +4,7 @@
 
 from itertools import combinations
 
-# Your Pokédex dictionary
+# Pokédex: each Pokémon mapped to its types
 pokedex = {
     'Pikachu': ('Electric',),
     'Charizard': ('Fire', 'Flying'),
@@ -18,52 +18,37 @@ pokedex = {
     'Onix': ('Rock', 'Ground')
 }
 
-def get_valid_integer(prompt):
-    """Prompt until the user enters a valid integer."""
-    while True:
-        try:
-            return int(input(prompt))
-        except ValueError:
-            print("Invalid input. Please enter a valid integer.")
-
-def find_strongest_squads(pokedex, k):
-    """
-    Return the max unique types any squad of size k can cover,
-    along with all squads that achieve that max.
-    """
+def find_strongest_squads(k):
     max_types = 0
-    strongest_squads = []
+    best_squads = []
 
-    for squad in combinations(pokedex.keys(), k):
-        types_union = set()
+    # Loop through all squads of size k
+    for squad in combinations(pokedex, k):
+        # Collect all unique types in this squad
+        types = set()
         for mon in squad:
-            types_union.update(pokedex[mon])
-        type_count = len(types_union)
-
-        if type_count > max_types:
-            max_types = type_count
-            strongest_squads = [(squad, types_union)]
-        elif type_count == max_types:
-            strongest_squads.append((squad, types_union))
-
-    return max_types, strongest_squads
+            types.update(pokedex[mon])
+        
+        # Count the types
+        tcount = len(types)
+        
+        # Update best squads
+        if tcount > max_types:
+            max_types = tcount
+            best_squads = [(squad, types)]
+        elif tcount == max_types:
+            best_squads.append((squad, types))
+    
+    return max_types, best_squads
 
 if __name__ == "__main__":
-    total_pokemon = len(pokedex)
-    print(f"You have {total_pokemon} Pokémon available.")
-
-    # Prompt user for k until it is valid
-    while True:
-        k = get_valid_integer(f"Enter squad size k (1 to {total_pokemon}): ")
-        if 1 <= k <= total_pokemon:
-            break
-        else:
-            print(f"Please enter a number between 1 and {total_pokemon}.")
-
-    max_types, squads = find_strongest_squads(pokedex, k)
-
-    print(f"\nMaximum unique types for k = {k}: {max_types}\n")
-    print("Strongest squad(s):")
+    n = len(pokedex)
+    k = int(input(f"Enter squad size k (1 to {n}): "))
+    
+    max_types, squads = find_strongest_squads(k)
+    
+    print(f"\nStrongest squads of size {k} cover {max_types} unique types:")
     for squad, types in squads:
-        print(f"  Squad: {', '.join(squad):40} → Types ({len(types)}): {', '.join(sorted(types))}")
+        print(f"• Squad: {', '.join(squad)} → Types ({len(types)}): {', '.join(sorted(types))}")
+
 
