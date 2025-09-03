@@ -1,11 +1,10 @@
 def earliest_step_to_form_lumos(runes: str) -> int:
-    required = set("lumos")  # We need one of each: L, U, M, O, S
+    required = set("lumos")  
     seen = set()
 
     for index, ch in enumerate(runes, start=1):
         if ch.lower() in required:
             seen.add(ch.lower())
-        # Check if we've collected all required runes
         if seen == required:
             return index
     return -1

@@ -1,6 +1,5 @@
 from itertools import combinations
 
-# Pokédex: each Pokémon mapped to its types
 pokedex = {
     'Pikachu': ('Electric',),
     'Charizard': ('Fire', 'Flying'),
@@ -18,17 +17,13 @@ def find_strongest_squads(k):
     max_types = 0
     best_squads = []
 
-    # Loop through all squads of size k
     for squad in combinations(pokedex, k):
-        # Collect all unique types in this squad
         types = set()
         for mon in squad:
             types.update(pokedex[mon])
         
-        # Count the types
         tcount = len(types)
         
-        # Update best squads
         if tcount > max_types:
             max_types = tcount
             best_squads = [(squad, types)]
